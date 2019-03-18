@@ -1,0 +1,23 @@
+{% extends 'investart/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+  Developer
+{% endblock %}
+{% block body_block %}
+  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
+  <div align=center>
+    <form id="dev_login_form" method="post" action="{% url 'dev_login' %}">
+      {% csrf_token %}
+      ID or E-mail <input type="text" name="username" value="" size="30" />
+      <br /><br />
+      <font style="opacity: 0.0">kk</font>Password <input type="password" name="password" value="" size="30" />
+      <br /><br />
+      <a href="{% url 'contact' %}">I forgot my password</a>
+      <br /><br />
+      Not registered yet? <a href="{% url 'dev_signup' %}">Sign up</a>
+      <br /><br />
+      <input type="submit" value="Submit" />
+      <br /><br />
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'investart/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+  Contact us
+{% endblock %}
+{% block body_block %}
+  <h2 align = center>Get in touch!</h2>
+  <div align=center>
+    {% if contacted_before %}
+      Thank you for contacting us!
+    {% else %}
+      <form id="contact_form" method="collect" action="{% url 'contact' %}">
+        {% csrf_token %}
+        Name <input type="text" name="name" value="" size="50" />
+        <br /><br />
+        E-mail <input type="text" name="email" value="" size="50" />
+        <br /><br />
+        Concern:
+        <br />
+        <textarea rows="4" cols="50" type="text" name="concern" value=""></textarea>
+        <br /><br />
+        <input type="submit" value="Submit" value="add_concern"/>
+        <br />
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}

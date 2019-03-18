@@ -1,0 +1,21 @@
+{% extends 'investart/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+  Index
+{% endblock %}
+{% block body_block %}
+  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
+  <div>
+  <br />
+  <div align=center>
+    <a href="{% url 'dev_login' %}">
+      <img src="{{ MEDIA_URL}}dev_login.png" style="border-radius: 10px" width = 350 />
+    </a>
+    <a href="{% url 'inv_login' %}">
+      <img src="{{ MEDIA_URL}}inv_login.png" style="border-radius: 10px" width = 350 />
+    </a>
+    <a href="{% url 'mod_login' %}">
+      <img src="{{ MEDIA_URL}}mod_login.png" style="border-radius: 10px" width = 350 />
+    </a>
+  </div>
+{% endblock %}
