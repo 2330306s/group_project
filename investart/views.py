@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+from investart.forms import DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
+from investart.models import NewUser
+from investart.decorators import dev_required, inv_required, mod_required
 from datetime import datetime
 
 @login_required
@@ -12,22 +16,22 @@ def account(request):
     response = render(request, 'investart/account.html', context_dict)
 
 @login_required
-def logout(request):
+def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
-def about(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    response = render(request, 'investart/about.html', context_dict)
-    return response
 
 def index(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     response = render(request, 'investart/index.html', context_dict)
+    return response
+
+def about(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/about.html', context_dict)
     return response
 
 def contact(request):
@@ -46,14 +50,14 @@ def dev_login(request):
         password = request.POST.get('password')
         dev = authenticate(username=username, password=password)
 
-        if user:
-            if user.is_active:
+        if dev:
+            if dev.is_active:
                 login(request, dev)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('developer'))
             else:
-                return HttpResponse("Your account is disabled")
+                return render(request, 'investart/bad_login.html', context_dict)
         else:
-            return HttpResponse("Invalid login details")
+            return render(request, 'investart/bad_login.html', context_dict)
     else:
         return render(request, 'investart/dev_login.html', context_dict)
         
@@ -70,11 +74,11 @@ def inv_login(request):
         if inv:
             if inv.is_active:
                 login(request, inv)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('investor'))
             else:
-                return HttpResponse("Your account is disabled")
+                return render(request, 'investart/bad_login.html', context_dict)
         else:
-            return HttpResponse("Invalid login details")
+            return render(request, 'investart/bad_login.html', context_dict)
     else:
         return render(request, 'investart/inv_login.html', context_dict)
 
@@ -90,11 +94,11 @@ def mod_login(request):
         if mod:
             if mod.is_active:
                 login(request, mod)
-                return HttpResponseRedirect(reverse('index'))
+                return HttpResponseRedirect(reverse('moderator'))
             else:
-                return HttpResponse("Your account is disabled")
+                return render(request, 'investart/bad_login.html', context_dict)
         else:
-            return HttpResponse("Invalid login details")
+            return render(request, 'investart/bad_login.html', context_dict)
     else:
         return render(request, 'investart/mod_login.html', context_dict)
 
@@ -102,16 +106,54 @@ def dev_signup(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
-    response = render(request, 'investart/dev_signup.html', context_dict)
-    return response
+    registered = False
+    
+    if request.method == 'POST':
+        dev_form = DevForm(data=request.POST)
+        dev_profile_form = DevProfileForm(data=request.POST)
+
+        if dev_form.is_valid() and dev_profile_form.is_valid():
+            dev = dev_form.save()
+            dev.set_password(dev.password)
+            dev.save()
+            dev_profile = dev_profile_form.save(commit=False)
+            dev_profile.dev = dev
+            dev_profile.save()
+            registered = True
+    else:
+        dev_form = DevForm()
+        dev_profile_form = DevProfileForm()
+
+    context_dict = {'dev_form': dev_form, 'dev_profile_form': dev_profile_form, 'registered': registered}
+    return render(request, 'investart/dev_signup.html', context_dict)
 
 def inv_signup(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
-    response = render(request, 'investart/inv_signup.html', context_dict)
-    return response
+    registered = False
+    
+    if request.method == 'POST':
+        inv_form = InvForm(data=request.POST)
+        inv_profile_form = InvProfileForm(data=request.POST)
 
+        if inv_form.is_valid() and inv_profile_form.is_valid():
+            inv = inv_form.save()
+            inv.set_password(inv.password)
+            inv.save()
+            inv_profile = inv_profile_form.save(commit=False)
+            inv_profile.inv = inv
+            inv_profile.save()
+            registered = True
+    else:
+        inv_form = InvForm()
+        inv_profile_form = InvProfileForm()
+
+    context_dict = {'inv_form': inv_form, 'inv_profile_form': inv_profile_form, 'registered': registered}
+    return render(request, 'investart/inv_signup.html', context_dict)
+
+@login_required
+@dev_required
 def developer(request):
     context_dict = {}
     visitor_cookie_handler(request)
@@ -119,6 +161,8 @@ def developer(request):
     response = render(request, 'investart/developer.html', context_dict)
     return response
 
+@login_required
+@inv_required
 def investor(request):
     context_dict = {}
     visitor_cookie_handler(request)
@@ -126,6 +170,8 @@ def investor(request):
     response = render(request, 'investart/investor.html', context_dict)
     return response
 
+@login_required
+@mod_required
 def moderator(request):
     context_dict = {}
     visitor_cookie_handler(request)

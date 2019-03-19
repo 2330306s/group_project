@@ -1,0 +1,33 @@
+{% extends 'investart/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+  Developer Signup
+{% endblock %}
+{% block body_block %}
+  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
+  <div align=center>
+    {% if registered %}
+      Thank you for signing up!
+    {% else %}
+      <a href="{% url 'dev_login' %}">Sign in</a> instead?
+      <form id="dev_form" method="post" action="{% url 'dev_signup' %}" enctype="multipart/form-data"> 
+        {% csrf_token %}
+        {% for field in dev_form %}
+          <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% if field.help_text %}
+              <small style="color: grey; display: none">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+              <p style="color: red">{{ error }}</p>
+            {% endfor %}
+          </p>
+        {% endfor %}
+        <br /><br />
+        <input type="submit" value="Submit" />
+        <br /><br />
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}

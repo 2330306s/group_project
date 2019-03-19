@@ -24,7 +24,22 @@
   </head>
   <body>
     <header class="overlay">
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and user.is_dev %}
+        <a href="{% url 'developer' %}">
+          <img src="{{ MEDIA_URL}}logo.png" width = 250 />
+        </a>
+        <a href="{% url 'account' %}"><align=right>My Account</align></a>
+        <a href="{% url 'logout' %}"><align=right>Logout</align></a>
+      {% elif user.is_authenticated and user.is_inv %}
+        <a href="{% url 'investor' %}">
+          <img src="{{ MEDIA_URL}}logo.png" width = 250 />
+        </a>
+        <a href="{% url 'account' %}"><align=right>My Account</align></a>
+        <a href="{% url 'logout' %}"><align=right>Logout</align></a>
+      {% elif user.is_authenticated and user.is_mod %}
+        <a href="{% url 'moderator' %}">
+          <img src="{{ MEDIA_URL}}logo.png" width = 250 />
+        </a>
         <a href="{% url 'account' %}"><align=right>My Account</align></a>
         <a href="{% url 'logout' %}"><align=right>Logout</align></a>
       {% else %}

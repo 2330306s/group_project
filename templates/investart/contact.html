@@ -9,7 +9,7 @@
     {% if contacted_before %}
       Thank you for contacting us!
     {% else %}
-      <form id="contact_form" method="collect" action="{% url 'contact' %}">
+      <form id="contact_form" method="post" action="{% url 'contact' %}">
         {% csrf_token %}
         Name <input type="text" name="name" value="" size="50" />
         <br /><br />
@@ -19,7 +19,7 @@
         <br />
         <textarea rows="4" cols="50" type="text" name="concern" value=""></textarea>
         <br /><br />
-        <input type="submit" value="Submit" value="add_concern"/>
+        <input type="submit" name="Submit" value="add_concern" />
         <br />
       </form>
     {% endif %}
