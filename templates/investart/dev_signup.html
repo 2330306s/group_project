@@ -10,10 +10,11 @@
       Thank you for signing up!
     {% else %}
       <a href="{% url 'dev_login' %}">Sign in</a> instead?
-      <form id="dev_form" method="post" action="{% url 'dev_signup' %}" enctype="multipart/form-data"> 
+      <form id="dev_form" method="post" action="{% url 'dev_signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in dev_form %}
           <p>
+            {{ field.errors }}
             {{ field.label_tag }}<br>
             {{ field }}
             {% if field.help_text %}

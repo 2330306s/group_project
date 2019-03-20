@@ -3,17 +3,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from investart.forms import DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
-from investart.models import NewUser
-from investart.decorators import dev_required, inv_required, mod_required
+from investart.forms import ProjectForm, DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
+from investart.models import NewUser, Project
+from investart.decorators import homepage_if_not_auth, dev_required, inv_required, mod_required
 from datetime import datetime
 
-@login_required
+@homepage_if_not_auth
 def account(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     response = render(request, 'investart/account.html', context_dict)
+    return response
 
 @login_required
 def user_logout(request):
@@ -178,6 +179,32 @@ def moderator(request):
     context_dict['visits'] = request.session['visits']
     response = render(request, 'investart/moderator.html', context_dict)
     return response
+
+@homepage_if_not_auth
+def show_project(request, project_name_slug):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    try:
+        project = Project.objects.get(slug=project_name_slug)
+        context_dict['project'] = project
+    except:
+        context_dict['project'] = None
+    return render(request, 'investart/project.html', context_dict)
+
+@homepage_if_not_auth
+@dev_required
+def add_project(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    form = ProjectForm()
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return developer(request)
+    return render(request, 'investart/add_project.html', {'form':form})
 
 def get_server_side_cookie(request, cookie, default_val = None):
     val = request.session.get(cookie)

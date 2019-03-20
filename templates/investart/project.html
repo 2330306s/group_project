@@ -1,0 +1,26 @@
+{% extends 'investart/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+  {{ project.name }}
+{% endblock %}
+{% block body_block %}
+  {% if project %}
+    <h2 align=center>{{ project.name }}</h2>
+    <div align=center>
+      Name:<br />
+      {{ project.name }}
+      <br /><br />
+      Overview:<br />
+      {{ project.overview }}
+      <br /><br />
+      Fund req:<br />
+      {{ project.fund_req }}
+      <br /><br />
+      Returns:<br />
+      {{ project.returns }}
+      <br /><br />
+      Inn score:<br />
+      {{ project.inn_score }}
+    </div>
+  {% endif %}
+{% endblock %}

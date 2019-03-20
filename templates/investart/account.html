@@ -5,4 +5,17 @@
 {% endblock %}
 {% block body_block %}
   <h2 align = center>Hey there, trendsetter!</h2>
+  {% if user.is_authenticated and user.is_dev %}
+    <div align=center>
+      Username:<br />
+      {{ user.username }}
+      <br /><br />
+      E-mail:<br />
+      {{ user.email }}
+    </div>
+  {% else %}
+    <div align=center>
+      Please <a href="{% url 'index' %}">log in</a>
+    </div>
+  {% endif %}
 {% endblock %}

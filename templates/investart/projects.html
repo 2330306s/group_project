@@ -1,0 +1,13 @@
+{% for p in projects %}
+  {% if p == act_project %}
+    <li>
+      <strong>
+        <a href="{% url 'show_project' p.slug %}">{{ p.name }}</a>
+      </strong>
+    </li>
+  {% else %}
+    <li>
+      <a href="{% url 'show_project' p.slug %}">{{ p.name }}</a>
+    </li>
+  {% endif %}
+{% endfor %}
