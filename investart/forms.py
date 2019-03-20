@@ -1,22 +1,26 @@
 from django import forms
-from investart.models import NewUser, DevProfile, InvProfile, ModProfile, Project, Contact
+from investart.models import NewUser, DevProfile, InvProfile, Project, Contact
 
 class ProjectForm(forms.ModelForm):
-    name = forms.CharField(max_length=50)
-    overview = forms.CharField(max_length=150, widget=forms.Textarea)
-    fund_req = forms.CharField(max_length=50, widget=forms.Textarea)
-    returns = forms.CharField(max_length=50, widget=forms.Textarea)
-    inn_score = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    project_name = forms.CharField(max_length=50, required=True)
+    email = forms.EmailField(max_length=50, required=True)
+    project_website = forms.URLField(max_length=50)
+    overview = forms.CharField(max_length=150, widget=forms.Textarea, required=True)
+    fund_requirement = forms.CharField(max_length=150, widget=forms.Textarea, required=True)
+    returns = forms.CharField(max_length=150, widget=forms.Textarea, required=True)
+    verified = forms.CharField(widget=forms.HiddenInput(), max_length=3, required=False)
+    innovation_score = forms.CharField(widget=forms.HiddenInput(), max_length=25, required=False)
+    competition_score = forms.CharField(widget=forms.HiddenInput(), max_length=25, required=False)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
         model = Project
-        fields = ('name', 'overview', 'fund_req', 'returns',)
+        fields = ('project_name', 'email', 'project_website', 'overview', 'fund_requirement', 'returns',)
 
 class ContactForm(forms.ModelForm):
-    name = forms.CharField(max_length=50)
-    email = forms.CharField(max_length=50)
-    concern = forms.CharField(max_length=150, widget=forms.Textarea)
+    name = forms.CharField(max_length=50, required=True)
+    email = forms.EmailField(max_length=50, required=True)
+    concern = forms.CharField(max_length=150, widget=forms.Textarea, required=True)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
@@ -51,20 +55,6 @@ class InvForm(forms.ModelForm):
             user.save()
         return user
 
-class ModForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-
-    class Meta:
-        model = NewUser
-        fields = ('email', 'username', 'password')
-
-    def save(self):
-        user = super().save(commit=False)
-        user.is_mod = True
-        if commit:
-            user.save()
-        return user
-
 class DevProfileForm(forms.ModelForm):
     class Meta:
         model = DevProfile
@@ -73,9 +63,4 @@ class DevProfileForm(forms.ModelForm):
 class InvProfileForm(forms.ModelForm):
     class Meta:
         model = InvProfile
-        fields = ()
-
-class ModProfileForm(forms.ModelForm):
-    class Meta:
-        model = ModProfile
         fields = ()

@@ -14,7 +14,7 @@
       {% for field in form.visible_fields %}
         <p>
           {{ field.errors }}
-          {{ field.label_tag }}<br>
+          <strong>{{ field.label_tag }}</strong><br>
           {{ field }}
           {% if field.help_text %}
             <small style="color: grey; display: none">{{ field.help_text }}</small>
@@ -24,7 +24,7 @@
           {% endfor %}
         </p>
       {% endfor %}
-      <input type="submit" name="submit" value="Submit" />
+      <input type="submit" name="submit" value="Submit" /><br /><br />
     </form>
   </div>
 {% endblock %}

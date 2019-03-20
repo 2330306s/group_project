@@ -145,4 +145,3 @@ MEDIA_URL = '/media/'
 
 DEV_LOGIN_URL = '/investart/dev_login/'
 INV_LOGIN_URL = '/investart/inv_login/'
-MOD_LOGIN_URL = '/investart/mod_login/'

@@ -4,10 +4,10 @@
   Developer Signup
 {% endblock %}
 {% block body_block %}
-  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
+  <h2 align=center >Developer Signup</h2>
   <div align=center>
     {% if registered %}
-      Thank you for signing up!
+      Thank you for signing up! <a href="{% url 'dev_login' %}">Sign in</a>
     {% else %}
       <a href="{% url 'dev_login' %}">Sign in</a> instead?
       <form id="dev_form" method="post" action="{% url 'dev_signup' %}" enctype="multipart/form-data">
@@ -15,7 +15,7 @@
         {% for field in dev_form %}
           <p>
             {{ field.errors }}
-            {{ field.label_tag }}<br>
+            <strong>{{ field.label_tag }}</strong><br>
             {{ field }}
             {% if field.help_text %}
               <small style="color: grey; display: none">{{ field.help_text }}</small>
@@ -25,9 +25,7 @@
             {% endfor %}
           </p>
         {% endfor %}
-        <br /><br />
-        <input type="submit" value="Submit" />
-        <br /><br />
+        <input type="submit" value="Submit" /><br /><br />
       </form>
     {% endif %}
   </div>

@@ -7,20 +7,33 @@
   {% if project %}
     <h2 align=center>{{ project.name }}</h2>
     <div align=center>
-      Name:<br />
-      {{ project.name }}
+      <strong>Name:</strong><br />
+      {{ project.project_name }}
       <br /><br />
-      Overview:<br />
+      <strong>Email:</strong><br />
+      {{ project.email }}
+      <br /><br />
+      <strong>Website:</strong><br />
+      {{ project.project_website }}
+      <br /><br />
+      <strong>Overview:</strong><br />
       {{ project.overview }}
       <br /><br />
-      Fund req:<br />
-      {{ project.fund_req }}
+      <strong>Fund requirement:</strong><br />
+      {{ project.fund_requirement }}
       <br /><br />
-      Returns:<br />
+      <strong>Returns:</strong><br />
       {{ project.returns }}
       <br /><br />
-      Inn score:<br />
-      {{ project.inn_score }}
+      <strong>Verified:</strong><br />
+      {{ project.verified }}
+      <br /><br />
+      <strong>Innovation score:</strong><br />
+      {{ project.innovation_score }}
+      <br /><br />
+      <strong>Competition score:</strong><br />
+      {{ project.competition_score }}
+      <br /><br />
     </div>
   {% endif %}
 {% endblock %}

@@ -4,17 +4,18 @@
   Investor Signup
 {% endblock %}
 {% block body_block %}
-  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
+  <h2 align=center >Investor Signup</h2>
   <div align=center>
     {% if registered %}
-      Thank you for signing up!
+      Thank you for signing up! <a href="{% url 'inv_login' %}">Sign in</a>
     {% else %}
       <a href="{% url 'inv_login' %}">Sign in</a> instead?
       <form id="inv_form" method="post" action="{% url 'inv_signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in inv_form %}
           <p>
-            {{ field.label_tag }}<br>
+            {{ field.errors }}
+            <strong>{{ field.label_tag }}</strong><br>
             {{ field }}
             {% if field.help_text %}
               <small style="color: grey; display: none">{{ field.help_text }}</small>
@@ -24,9 +25,7 @@
             {% endfor %}
           </p>
         {% endfor %}
-        <br /><br />
-        <input type="submit" value="Submit" />
-        <br /><br />
+        <input type="submit" value="Submit" /><br /><br />
       </form>
     {% endif %}
   </div>

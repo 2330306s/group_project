@@ -1,7 +1,23 @@
 {% extends 'investart/base.html' %}
 {% load staticfiles %}
+{% load investart_template_tags %}
 {% block title_block %}
   Investor
 {% endblock %}
 {% block body_block %}
+  <h2 align=center>Welcome to your lounge!</h2>
+  <div>
+    Here are all the projects -
+    {% get_project_list project %}
+    {% if projects %}
+      {% for project in projects %}
+        <li>
+          <a href="{% url 'show_project' project.slug}">
+            {{ project.name }}
+          </a>
+        </li>
+      {% endfor %}
+    {% endif %}
+    <br /><br />
+  </div>
 {% endblock %}

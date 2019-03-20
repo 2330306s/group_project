@@ -3,9 +3,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from investart.forms import ProjectForm, ContactForm, DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
+from investart.forms import ProjectForm, ContactForm, DevForm, InvForm, DevProfileForm, InvProfileForm
 from investart.models import NewUser, Project, Contact
-from investart.decorators import homepage_if_not_auth, dev_required, inv_required, mod_required
+from investart.decorators import homepage_if_not_auth, dev_required, inv_required
 from datetime import datetime
 
 @homepage_if_not_auth
@@ -44,8 +44,15 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             form.save(commit=True)
-            return index(request)
+            return thank_you(request)
     return render(request, 'investart/contact.html',{'form':form})
+
+def thank_you(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/thank_you.html', context_dict)
+    return response
 
 def dev_login(request):
     context_dict = {}
@@ -87,26 +94,6 @@ def inv_login(request):
             return render(request, 'investart/bad_login.html', context_dict)
     else:
         return render(request, 'investart/inv_login.html', context_dict)
-
-def mod_login(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        mod = authenticate(username=username, password=password)
-
-        if mod:
-            if mod.is_active:
-                login(request, mod)
-                return HttpResponseRedirect(reverse('moderator'))
-            else:
-                return render(request, 'investart/bad_login.html', context_dict)
-        else:
-            return render(request, 'investart/bad_login.html', context_dict)
-    else:
-        return render(request, 'investart/mod_login.html', context_dict)
 
 def dev_signup(request):
     context_dict = {}
@@ -174,15 +161,6 @@ def investor(request):
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     response = render(request, 'investart/investor.html', context_dict)
-    return response
-
-@login_required
-@mod_required
-def moderator(request):
-    context_dict = {}
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    response = render(request, 'investart/moderator.html', context_dict)
     return response
 
 @homepage_if_not_auth

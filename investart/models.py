@@ -3,11 +3,15 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
 
 class Project(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    project_name = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=50)
+    project_website = models.URLField(max_length=50)
     overview = models.CharField(max_length=150)
-    fund_req = models.CharField(max_length=50)
-    returns = models.CharField(max_length=50)
-    inn_score = models.IntegerField(default=0)
+    fund_requirement = models.CharField(max_length=150)
+    returns = models.CharField(max_length=150)
+    verified = models.CharField(max_length=3, default="No")
+    innovation_score = models.CharField(max_length=25, default="Verification pending")
+    competition_score = models.CharField(max_length=25, default="Verification pending")
     slug = models.SlugField(blank=True, unique=True)
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -21,7 +25,7 @@ class Project(models.Model):
 
 class Contact(models.Model):
     name = models.CharField(max_length=50)
-    email = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50)
     concern = models.CharField(max_length=150)
     slug = models.SlugField(blank=True, unique=True)
     def save(self, *args, **kwargs):
@@ -37,7 +41,6 @@ class Contact(models.Model):
 class NewUser(AbstractUser):
     is_dev = models.BooleanField(default=False)
     is_inv = models.BooleanField(default=False)
-    is_mod = models.BooleanField(default=False)
 
 class DevProfile(models.Model):
     dev = models.OneToOneField(NewUser, on_delete=models.CASCADE, primary_key=True)
@@ -50,9 +53,3 @@ class InvProfile(models.Model):
     
     def __str__ (self):
         return self.inv.username
-
-class ModProfile(models.Model):
-    mod = models.OneToOneField(NewUser, on_delete=models.CASCADE, primary_key=True)
-    
-    def __str__(self):
-        return self.mod.username
