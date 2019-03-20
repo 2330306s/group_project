@@ -3,8 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from investart.forms import ProjectForm, DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
-from investart.models import NewUser, Project
+from investart.forms import ProjectForm, ContactForm, DevForm, InvForm, ModForm, DevProfileForm, InvProfileForm, ModProfileForm
+from investart.models import NewUser, Project, Contact
 from investart.decorators import homepage_if_not_auth, dev_required, inv_required, mod_required
 from datetime import datetime
 
@@ -39,8 +39,13 @@ def contact(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
-    response = render(request, 'investart/contact.html', context_dict)
-    return response
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return index(request)
+    return render(request, 'investart/contact.html',{'form':form})
 
 def dev_login(request):
     context_dict = {}

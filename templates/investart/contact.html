@@ -6,22 +6,25 @@
 {% block body_block %}
   <h2 align = center>Get in touch!</h2>
   <div align=center>
-    {% if contacted_before %}
-      Thank you for contacting us!
-    {% else %}
-      <form id="contact_form" method="post" action="{% url 'contact' %}">
-        {% csrf_token %}
-        Name <input type="text" name="name" value="" size="50" />
-        <br /><br />
-        E-mail <input type="text" name="email" value="" size="50" />
-        <br /><br />
-        Concern:
-        <br />
-        <textarea rows="4" cols="50" type="text" name="concern" value=""></textarea>
-        <br /><br />
-        <input type="submit" name="Submit" value="add_concern" />
-        <br />
-      </form>
-    {% endif %}
+    <form id="contact_form" method="post" action="{% url 'contact' %}">
+      {% csrf_token %}
+      {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+      {% endfor %}
+      {% for field in form.visible_fields %}
+        <p>
+          {{ field.errors }}
+          {{ field.label_tag }}<br />
+          {{ field }}
+          {% if field.help_text %}
+            <small style="color: grey; display: none;">{{ field.help_text }}</small>
+          {% endif %}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <input type="submit" name="submit" value="Submit" />
+    </form>
   </div>
 {% endblock %}

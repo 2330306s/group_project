@@ -3,9 +3,9 @@ from investart.models import NewUser, DevProfile, InvProfile, ModProfile, Projec
 
 class ProjectForm(forms.ModelForm):
     name = forms.CharField(max_length=50)
-    overview = forms.CharField(max_length=150)
-    fund_req = forms.CharField(max_length=50)
-    returns = forms.CharField(max_length=50)
+    overview = forms.CharField(max_length=150, widget=forms.Textarea)
+    fund_req = forms.CharField(max_length=50, widget=forms.Textarea)
+    returns = forms.CharField(max_length=50, widget=forms.Textarea)
     inn_score = forms.IntegerField(widget=forms.HiddenInput(), required=False)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
@@ -16,11 +16,11 @@ class ProjectForm(forms.ModelForm):
 class ContactForm(forms.ModelForm):
     name = forms.CharField(max_length=50)
     email = forms.CharField(max_length=50)
-    concern = forms.CharField(max_length=150)
+    concern = forms.CharField(max_length=150, widget=forms.Textarea)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     class Meta:
-        model = Project
+        model = Contact
         fields = ('name', 'email', 'concern',)
 
 class DevForm(forms.ModelForm):

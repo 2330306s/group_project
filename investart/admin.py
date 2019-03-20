@@ -4,7 +4,7 @@ from investart.models import DevProfile, InvProfile, ModProfile, Project, Contac
 class ProjectAdmin(admin.ModelAdmin):
     prepopulated_fields={'slug':('name',)}
 
-class ContactAdmin(admin.ContactAdmin):
+class ContactAdmin(admin.ModelAdmin):
     prepopulated_fields={'slug':('name',)}
     
 admin.site.register(Contact, ContactAdmin)
