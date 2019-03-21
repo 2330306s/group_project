@@ -4,15 +4,21 @@
   Index
 {% endblock %}
 {% block body_block %}
-  <h2 align=center style="font-weight: 500">Hey there, trendsetter!</h2>
-  <div>
-  <br />
-  <div align=center>
-    <a href="{% url 'dev_login' %}">
-      <img src="{{ MEDIA_URL}}dev_login.png" style="border-radius: 10px" width = 350 /><br />
-    </a>
-    <a href="{% url 'inv_login' %}">
-      <img src="{{ MEDIA_URL}}inv_login.png" style="border-radius: 10px" width = 350 /><br />
-    </a>
-  </div>
+  <h2 align=center>Hey there, trendsetter!</h2>
+  <table style="width: 90%">
+    <tr>
+      <td align=center>
+        Your weekly dose of motivation! -<br />
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/mk48xRzuNvA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </td>
+      <td align=center>
+        <a href="{% url 'dev_login' %}">
+          <img src="{{ MEDIA_URL}}dev_login.png" style="border-radius: 10px" width = 350 /><br />
+        </a>
+        <a href="{% url 'inv_login' %}">
+          <img src="{{ MEDIA_URL}}inv_login.png" style="border-radius: 10px" width = 350 /><br />
+        </a>
+      </td>
+    </tr>
+  </table>
 {% endblock %}

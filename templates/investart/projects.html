@@ -1,13 +1,23 @@
-{% for p in projects %}
-  {% if p == act_project %}
-    <li>
-      <strong>
-        <a href="{% url 'show_project' p.slug %}">{{ p.name }}</a>
-      </strong>
-    </li>
-  {% else %}
-    <li>
-      <a href="{% url 'show_project' p.slug %}">{{ p.name }}</a>
-    </li>
-  {% endif %}
-{% endfor %}
+{% block content_block %}
+  {% for p in projects %}
+    {% if p == act_project %}
+      <tr align=center bgcolor=lightsteelblue>
+        <td>
+          <a href="{% url 'show_project' p.slug %}">{{ p.project_name }}</a>
+        </td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.project_website }}</td>
+        <td>{{ p.verified }}>/td>
+      </tr>
+    {% else %}
+      <tr align=center bgcolor=lightsteelblue>
+        <td>
+          <a href="{% url 'show_project' p.slug %}">{{ p.project_name }}</a>
+        </td>
+        <td>{{ p.email }}</td>
+        <td>{{ p.project_website }}</td>
+        <td>{{ p.verified }}</td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}

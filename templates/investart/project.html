@@ -1,39 +1,92 @@
 {% extends 'investart/base.html' %}
 {% load staticfiles %}
 {% block title_block %}
-  {{ project.name }}
+  {{ project.project_name }}
+{% endblock %}
+{% block style_block %}
+  table {
+    width: 50%;
+  }
+  tr {
+    text-align: center;
+  }
 {% endblock %}
 {% block body_block %}
   {% if project %}
-    <h2 align=center>{{ project.name }}</h2>
+    <h2 align=center>{{ project.project_name }}</h2>
     <div align=center>
-      <strong>Name:</strong><br />
-      {{ project.project_name }}
-      <br /><br />
-      <strong>Email:</strong><br />
-      {{ project.email }}
-      <br /><br />
-      <strong>Website:</strong><br />
-      {{ project.project_website }}
-      <br /><br />
-      <strong>Overview:</strong><br />
-      {{ project.overview }}
-      <br /><br />
-      <strong>Fund requirement:</strong><br />
-      {{ project.fund_requirement }}
-      <br /><br />
-      <strong>Returns:</strong><br />
-      {{ project.returns }}
-      <br /><br />
-      <strong>Verified:</strong><br />
-      {{ project.verified }}
-      <br /><br />
-      <strong>Innovation score:</strong><br />
-      {{ project.innovation_score }}
-      <br /><br />
-      <strong>Competition score:</strong><br />
-      {{ project.competition_score }}
-      <br /><br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Developer Email</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.email }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Project Website</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.project_website }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Overview</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.overview }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Fund requirement</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.fund_requirement }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Returns</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.returns }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Verified</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.verified }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Innovation Score</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.innovation_score }}</td>
+        </tr>
+      </table>
+      <br />
+      <table align=center>
+        <tr bgcolor=lightblue>
+          <th>Competition Score</th>
+        </tr>
+        <tr bgcolor=lightsteelblue>
+          <td>{{ project.competition_score }}</td>
+        </tr>
+      </table>
+      <br />
     </div>
   {% endif %}
 {% endblock %}

@@ -12,6 +12,8 @@
       <br /><br />
       <strong>E-mail:</strong><br />
       {{ user.email }}
+      <br /><br />
+      <a href="{% url 'password_reset' %}">Change password</a>
     </div>
   {% else %}
     <div align=center>

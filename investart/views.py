@@ -74,7 +74,6 @@ def dev_login(request):
     else:
         return render(request, 'investart/dev_login.html', context_dict)
         
-
 def inv_login(request):
     context_dict = {}
     visitor_cookie_handler(request)
@@ -83,6 +82,7 @@ def inv_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         inv = authenticate(username=username, password=password)
+
 
         if inv:
             if inv.is_active:
@@ -93,7 +93,7 @@ def inv_login(request):
         else:
             return render(request, 'investart/bad_login.html', context_dict)
     else:
-        return render(request, 'investart/inv_login.html', context_dict)
+        return HttpResponseRedirect(reverse('investor'))
 
 def dev_signup(request):
     context_dict = {}
@@ -188,6 +188,34 @@ def add_project(request):
             form.save(commit=True)
             return developer(request)
     return render(request, 'investart/add_project.html', {'form':form})
+
+def password_reset(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/password_reset_form.html', context_dict)
+    return response
+
+def password_reset_done(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/password_reset_done.html', context_dict)
+    return response
+
+def password_reset_confirm(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/password_reset_confirm.html', context_dict)
+    return response
+
+def password_reset_complete(request):
+    context_dict = {}
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'investart/password_reset_complete.html', context_dict)
+    return response
 
 def get_server_side_cookie(request, cookie, default_val = None):
     val = request.session.get(cookie)

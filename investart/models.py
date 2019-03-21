@@ -14,14 +14,14 @@ class Project(models.Model):
     competition_score = models.CharField(max_length=25, default="Verification pending")
     slug = models.SlugField(blank=True, unique=True)
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.slug = slugify(self.project_name)
         super(Project, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'projects'
 
     def __str__(self):
-        return self.name
+        return self.project_name
 
 class Contact(models.Model):
     name = models.CharField(max_length=50)
@@ -44,12 +44,14 @@ class NewUser(AbstractUser):
 
 class DevProfile(models.Model):
     dev = models.OneToOneField(NewUser, on_delete=models.CASCADE, primary_key=True)
+    email_confirmed = models.BooleanField(default=False)
         
     def __str__(self):
         return self.dev.username
 
 class InvProfile(models.Model):
     inv = models.OneToOneField(NewUser, on_delete=models.CASCADE, primary_key=True)
+    email_confirmed = models.BooleanField(default=False)
     
     def __str__ (self):
         return self.inv.username

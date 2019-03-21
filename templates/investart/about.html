@@ -3,49 +3,42 @@
 {% block title_block %}
   About us
 {% endblock %}
-{% block style_block %}
-.row::after {
-  content: "";
-  clear: both;
-  padding: 5px;
-}
-.column {
-  float: left;
-  width: 24%;
-  padding: 5px
-}
-{% endblock %}
 {% block body_block %}
   <div align=center>
     <h2>About Us</h2>
     The developer-investor portal investart was created as a part of a project by students of the University
     of Glasgow. The aim of the project was to bring developers and investors closer together so
     they could work together towards creating innovative projects. Here are the people behind this project-
-    <br /><br />
   </div>
-  <div class="row" align=center>
-    <div class="column">
-      <img src="{{ MEDIA_URL}}y_sharma.jpg" width=150 height=188 />
-      <figcaption>Yatin Sharma</figcaption>
-    </div>
-    <div class="column">
-      <img src="{{ MEDIA_URL}}c_yau.png" width=150 height=188 />
-      <figcaption>Chung-Ki Yau</figcaption>
-    </div>
-    <div class="column">
-      <img src="{{ MEDIA_URL}}x_wang.png" width=150 height=188 />
-      <figcaption>Xin Wang</figcaption>
-    </div>
-    <div class="column">
-      <img src="{{ MEDIA_URL}}r_shen.jpg" width=150 height=188 />
-      <figcaption>Ruize Shen</figcaption>
-    </div>
-    <br /><br /><br />
-  </div>
-  <div align=center>
-    ...and lastly our professor and lab tutor Dr. Manlove
-    <br /><br/>
-    <img src="{{ MEDIA_URL}}dr_manlove.jpg" width=150 height=188 />
-    <figcaption>Dr. Manlove</figcaption>
-  </div>
+  <table align=center>
+    <tr align=center>
+      <td>
+        <img src="{{ MEDIA_URL}}y_sharma.jpg" width=150 height=188 />
+        <figcaption>Yatin Sharma</figcaption>
+      </td>
+      <td>
+        <img src="{{ MEDIA_URL}}c_yau.png" width=150 height=188 />
+        <figcaption>Chung-Ki Yau</figcaption>
+      </td>
+      <td>
+        <img src="{{ MEDIA_URL}}x_wang.png" width=150 height=188 />
+        <figcaption>Xin Wang</figcaption>
+      </td>
+      <td>
+        <img src="{{ MEDIA_URL}}r_shen.jpg" width=150 height=188 />
+        <figcaption>Ruize Shen</figcaption>
+      </td>
+      <br /><br /><br />
+    </tr>
+  </table>
+  <br /><br />
+  <table align=center>
+    <tr align=center>
+      <td>
+      ...and lastly our professor and lab tutor Dr. Manlove<br /><br />
+      <img src="{{ MEDIA_URL}}dr_manlove.jpg" width=150 height=188 />
+      <figcaption>Dr. Manlove</figcaption>
+      </td>
+    </tr>
+  </table>
 {% endblock %}

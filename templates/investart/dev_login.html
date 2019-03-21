@@ -5,21 +5,25 @@
 {% endblock %}
 {% block body_block %}
   <h2 align=center>Developer Login</h2>
-  <div align=center>
-    <form id="dev_login_form" method="post" action="{% url 'dev_login' %}">
-      {% csrf_token %}
-      <strong>Username:</strong><br />
-      <input type="text" name="username" value="" size="30" />
-      <br /><br />
-      <strong>Password:</strong><br />
-      <input type="password" name="password" value="" size="30" />
-      <br /><br />
-      <a href="{% url 'contact' %}">I forgot my password</a>
-      <br /><br />
-      Not registered yet? <a href="{% url 'dev_signup' %}">Sign up</a>
-      <br /><br />
-      <input type="submit" value="Submit" />
-      <br /><br />
-    </form>
-  </div>
+  {% if user.is_authenticated %}
+    <div align=center>You are already logged in. <a href="{% url 'developer' %}">Click here</a> to go to your projects page.</div>
+  {% else %}
+    <div align=center>
+      <form id="dev_login_form" method="post" action="{% url 'dev_login' %}">
+        {% csrf_token %}
+        <strong>Username:</strong><br />
+        <input type="text" name="username" value="" size="30" />
+        <br /><br />
+        <strong>Password:</strong><br />
+        <input type="password" name="password" value="" size="30" />
+        <br /><br />
+        <a href="{% url 'password_reset' %}">I forgot my password</a>
+        <br /><br />
+        Not registered yet? <a href="{% url 'dev_signup' %}">Sign up</a>
+        <br /><br />
+        <input type="submit" value="Submit" />
+        <br /><br />
+      </form>
+    </div>
+  {% endif %}
 {% endblock %}

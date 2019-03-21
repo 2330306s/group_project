@@ -14,7 +14,6 @@
         {% csrf_token %}
         {% for field in dev_form %}
           <p>
-            {{ field.errors }}
             <strong>{{ field.label_tag }}</strong><br>
             {{ field }}
             {% if field.help_text %}
