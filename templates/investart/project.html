@@ -20,7 +20,7 @@
           <th>Developer Email</th>
         </tr>
         <tr bgcolor=lightsteelblue>
-          <td>{{ project.email }}</td>
+          <td><a href="mailto:{{ project.email }}">{{ project.email }}</a></td>
         </tr>
       </table>
       <br />
@@ -29,7 +29,7 @@
           <th>Project Website</th>
         </tr>
         <tr bgcolor=lightsteelblue>
-          <td>{{ project.project_website }}</td>
+          <td><a href="{{ project.project_website }}">{{ project.project_website }}</a></td>
         </tr>
       </table>
       <br />

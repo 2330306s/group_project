@@ -23,6 +23,7 @@ STATICFILES_DIR = [STATIC_DIR,]
 
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
+#Custom user model to differentiate the type of users
 AUTH_USER_MODEL = 'investart.NewUser'
 
 # Quick-start development settings - unsuitable for production
@@ -120,6 +121,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
 
+#Prints email content in the console, can be swapped for a mailing service API
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Internationalization
@@ -144,5 +146,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
+#Custom login URLs
 DEV_LOGIN_URL = '/investart/dev_login/'
 INV_LOGIN_URL = '/investart/inv_login/'

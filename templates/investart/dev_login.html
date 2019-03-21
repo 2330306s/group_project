@@ -6,7 +6,7 @@
 {% block body_block %}
   <h2 align=center>Developer Login</h2>
   {% if user.is_authenticated %}
-    <div align=center>You are already logged in. <a href="{% url 'developer' %}">Click here</a> to go to your projects page.</div>
+    <div align=center>You are already logged in. Click on the icon in the top left to go to your projects page.</div><br />
   {% else %}
     <div align=center>
       <form id="dev_login_form" method="post" action="{% url 'dev_login' %}">

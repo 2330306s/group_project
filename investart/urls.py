@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as req_views
 from investart import views
 
 urlpatterns = [
@@ -14,11 +14,13 @@ urlpatterns = [
     url(r'^inv_signup/$', views.inv_signup, name='inv_signup'),
     url(r'^developer/$', views.developer, name='developer'),
     url(r'^investor/$', views.investor, name='investor'),
+    #More complex URL mapping required to display the project name
     url(r'^project/(?P<project_name_slug>[\w\-]+)/$', views.show_project, name='show_project'),
     url(r'^add_project/$', views.add_project, name='add_project'),
-    url(r'^password_reset/$', auth_views.password_reset, name='password_reset'),
-    url(r'^password_reset/done/$', auth_views.password_reset_done, name='password_reset_done'),
+    #Mapping URLs for resetting a password
+    url(r'^password_reset/$', req_views.password_reset, name='password_reset'),
+    url(r'^password_reset/done/$', req_views.password_reset_done, name='password_reset_done'),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        auth_views.password_reset_confirm, name='password_reset_confirm'),
-    url(r'^reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
+        req_views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', req_views.password_reset_complete, name='password_reset_complete'),
 ]

@@ -1,9 +1,12 @@
+#Population script
+
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'group_project.settings')
 import django
 django.setup()
 from investart.models import Project, Contact
 
+#Function to add projects, contact details from dictionaries
 def populate():
     projects = {}
     contacts = {}
@@ -17,6 +20,7 @@ def populate():
     for contact, contact_data in contacts.items():
         c = add_contact(contact, contact_data["email"], contact_data["concern"],)
 
+#Function to get an object to be added
 def add_project(project_name, email, project_website, overview, fund_requirement, returns, verified, innovation_score, competition_score):
     p = Project.objects.get_or_create(project_name=name, email=email, project_website=project_website, overview=overview,
                                       fund_requirement=fund_requirement, returns=returns, verified=verified,
@@ -27,6 +31,7 @@ def add_project(project_name, email, project_website, overview, fund_requirement
     p.save()
     return p
 
+#Function to get an object to be added
 def add_contact(name, email, concern):
     c = Contact.objects.get_or_create(name=name, email=email, concern=concern)[0]
     c.save()

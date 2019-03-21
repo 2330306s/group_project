@@ -8,6 +8,11 @@ from investart.models import NewUser, Project, Contact
 from investart.decorators import homepage_if_not_auth, dev_required, inv_required
 from datetime import datetime
 
+#Basic syntax workflow-
+#Adding a decorator depending on the type of authentication required
+#Counting the number of visits
+#Rendering the page
+
 @homepage_if_not_auth
 def account(request):
     context_dict = {}
@@ -39,6 +44,7 @@ def contact(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+    #Getting details from the contact form
     form = ContactForm()
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -58,6 +64,7 @@ def dev_login(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+    #Getting login details if user is not already logged in otherwise redirecting
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -78,6 +85,7 @@ def inv_login(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+    #Getting login details if user is not already logged in otherwise redirecting
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -93,14 +101,14 @@ def inv_login(request):
         else:
             return render(request, 'investart/bad_login.html', context_dict)
     else:
-        return HttpResponseRedirect(reverse('investor'))
+        return render(request, 'investart/inv_login.html', context_dict)
 
 def dev_signup(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     registered = False
-    
+    #Getting details from the signup form if the form is valid
     if request.method == 'POST':
         dev_form = DevForm(data=request.POST)
         dev_profile_form = DevProfileForm(data=request.POST)
@@ -125,7 +133,7 @@ def inv_signup(request):
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
     registered = False
-    
+    #Getting details from the signup form if the form is valid
     if request.method == 'POST':
         inv_form = InvForm(data=request.POST)
         inv_profile_form = InvProfileForm(data=request.POST)
@@ -168,6 +176,7 @@ def show_project(request, project_name_slug):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+    #Showing all projects
     try:
         project = Project.objects.get(slug=project_name_slug)
         context_dict['project'] = project
