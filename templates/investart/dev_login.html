@@ -5,7 +5,9 @@
 {% endblock %}
 {% block body_block %}
   <h2 align=center>Developer Login</h2>
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and user.is_inv %}
+    <div align=center>You have been logged into your investor account. Click on the icon in the top left to go to your projects page.</div><br />
+  {% elif user.is_authenticated and user.is_dev %}
     <div align=center>You are already logged in. Click on the icon in the top left to go to your projects page.</div><br />
   {% else %}
     <div align=center>
