@@ -8,8 +8,16 @@ from investart.models import Project, Contact
 
 #Function to add projects, contact details from dictionaries
 def populate():
-    projects = {}
-    contacts = {}
+    projects = {"ReVive": {"email": "bobbydentes@gmail.com", "project_website": "http://www.revive.com",
+                           "overview": "Startup which aims at achieving global healthcare through tech", "fund_requirement": "1 million GBP",
+                           "returns": "Investment+interest", "verified": "Yes", "innovation_score": "4/5", "competition_score": "3/5"},
+                "Help'er": {"email": "daveredditor@gmail.com", "project_website": "",
+                           "overview": "Startup which aims to empower women through tech", "fund_requirement": "500,000 GBP",
+                           "returns": "Stake in the company", "verified": "No", "innovation_score": "Verification pending", "competition_score": "Verification pending"}
+                }
+    contacts = {"Dave": {"email": "daveredditor@gmail.com", "concern": "Hi, how long until my project is verified? Thanks"},
+                "Aaron": {"email": "aaronaardvark@gmail.com", "concern": "Hey, A suggestion - please start a bidding system for investors! Thank you"}
+                }
 
     for project, project_data in projects.items():
         p = add_project(project, project_data["email"], project_data["project_website"],
@@ -22,7 +30,7 @@ def populate():
 
 #Function to get an object to be added
 def add_project(project_name, email, project_website, overview, fund_requirement, returns, verified, innovation_score, competition_score):
-    p = Project.objects.get_or_create(project_name=name, email=email, project_website=project_website, overview=overview,
+    p = Project.objects.get_or_create(project_name=project_name, email=email, project_website=project_website, overview=overview,
                                       fund_requirement=fund_requirement, returns=returns, verified=verified,
                                       innovation_score=innovation_score, competition_score=competition_score)[0]
     p.verified=verified

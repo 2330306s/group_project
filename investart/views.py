@@ -153,7 +153,6 @@ def inv_signup(request):
     context_dict = {'inv_form': inv_form, 'inv_profile_form': inv_profile_form, 'registered': registered}
     return render(request, 'investart/inv_signup.html', context_dict)
 
-@login_required
 @dev_required
 def developer(request):
     context_dict = {}
@@ -162,7 +161,6 @@ def developer(request):
     response = render(request, 'investart/developer.html', context_dict)
     return response
 
-@login_required
 @inv_required
 def investor(request):
     context_dict = {}
@@ -184,12 +182,12 @@ def show_project(request, project_name_slug):
         context_dict['project'] = None
     return render(request, 'investart/project.html', context_dict)
 
-@homepage_if_not_auth
 @dev_required
 def add_project(request):
     context_dict = {}
     visitor_cookie_handler(request)
     context_dict['visits'] = request.session['visits']
+    #Getting details from the add project form
     form = ProjectForm()
     if request.method == 'POST':
         form = ProjectForm(request.POST)
@@ -226,6 +224,7 @@ def password_reset_complete(request):
     response = render(request, 'investart/password_reset_complete.html', context_dict)
     return response
 
+#Visits/Cookie handlers
 def get_server_side_cookie(request, cookie, default_val = None):
     val = request.session.get(cookie)
     if not val:
